@@ -1,0 +1,45 @@
+{% extends "base.html.jinja2" %}
+
+
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <h1 class="title has-text-light">You've Been Ghosted!</h1>
+      <div class="content has-text-light">
+        <p>
+          You're here because you have either been ghosted or you want to start your own haunt! In either case, don't worry! It's super simple!
+        </p>
+        <p>
+          <ul>
+            <li>If you've been ghosted, cut out your ghost and place it somewhere visible so that you won't be ghosted again! Then put in your Ghost ID below to print off more ghosts!</li>
+            <li>If you want to start your own haunt, click the "Start a Haunt" button below to print off your first ghosts!</li>
+          </ul>
+        </p>
+        <p>
+          Once you've printed off your ghosts, make a goodie bag, put the printed note in, and spread the spookiness to your friends!
+        </p>
+      </div>
+      <div class="columns is-multiline">
+        <div class="column is-three-quarters-desktop is-full-mobile">
+          <form action="/auth" method="POST">
+            <div class="field has-addons">
+              <div class="control is-expanded">
+                <input class="input" type="text" placeholder="Ghost ID" name="ghost_id">
+              </div>
+              <div class="control">
+                <button class="button is-orange">
+                  Get Ghosting!
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="column is-one-quarter-desktop is-full-mobile">
+          <form action="/haunt" method="POST">
+            <button class="button is-fullwidth is-light" type="submit">Start a Haunt</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

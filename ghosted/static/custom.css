@@ -1,0 +1,31 @@
+html {
+  background-color: #242424;
+}
+
+p {
+  margin-bottom: 2vh;
+}
+
+.input::placeholder {
+  color: #555;
+}
+
+.is-spooky, .is-spooky:hover {
+  background-color: #9E1FFF;
+  border-color: transparent;
+  color: black;
+}
+
+.is-orange, .is-orange:hover {
+  background-color: #FFA52E;
+  border-color: transparent;
+  color: black;
+}
+
+.column.fill {
+  height: 94vh;
+}
+
+.vis-network {
+  background-color: #333;
+}

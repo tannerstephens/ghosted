@@ -1,0 +1,58 @@
+{% extends "base.html.jinja2" %}
+
+
+{% block content %}
+  <div class="is-hidden" id="ghosts">{{ ghosts }}</div>
+  <section class="section">
+    <div class="columns is-multiline">
+      <div class="column is-full-tablet is-one-quarter-desktop">
+        <h1 class="title has-text-light">{{ ghost_id }}</h1>
+      </div>
+      <div class="column is-full-tablet is-three-quarters-desktop fill" id="ghostView">
+        
+      </div>
+    </div>
+  </section>
+{% endblock content %}
+
+
+{% block scripts %}
+  <script>
+    function update_ghosts(ghosts) {
+      const nodes = new vis.DataSet(ghosts.map(function(ghost) {
+        return {
+          id: ghost.id,
+          shape: 'circle'
+        };
+      }));
+
+      let e = [];
+
+      for (i in ghosts) {
+        for (c in ghosts[i].children){
+          e.push({from: ghosts[i].id, to: ghosts[i].children[c], arrows:'to'});
+        }
+      }
+
+      const edges = new vis.DataSet(e);
+
+      const netdata = {
+        nodes: nodes,
+        edges: edges
+      };
+
+      const options = {};
+
+      const container = document.getElementById("ghostView");
+
+      const network = new vis.Network(container, netdata, options);
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const ghosts = JSON.parse(document.getElementById('ghosts').innerHTML);
+
+      update_ghosts(ghosts);      
+    })
+  </script>
+{% endblock scripts %}
