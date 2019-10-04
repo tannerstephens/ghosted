@@ -1,4 +1,6 @@
-from flask import render_template, Blueprint, session, url_for, request, flash, redirect
+from flask import render_template, Blueprint, session, url_for, request, flash, redirect, send_file
+from ghosted.lib import generate
+
 import random
 import json
 
@@ -65,13 +67,50 @@ def haunt():
 
 @views.route('/auth', methods=['POST'])
 def auth():
-  ghost_id = request.form.get('ghost_id')
+  ghost_id = str(request.form.get('ghost_id')).upper()
 
   if not ghost_id:
-    flash('Ghost ID not found', 'warning')
+    flash('You need to ender a ghost ID', 'info')
     return redirect(url_for('views.home'))
 
   ghost = Spectre.query.filter_by(ghost_id=ghost_id).first()
 
+  if not ghost:
+    flash('Ghost ID not found', 'warning')
+    return redirect(url_for('views.home'))
 
+  ghost.is_active = True
+
+  session['id'] = ghost.ghost_id
+
+  db.session.commit()
+
+  return redirect(url_for('views.haunt'))
+
+
+@views.route('/haunt/download')
+def download_ghosts():
+  ghost_id = session.get('id')
+
+  if not ghost_id:
+    flash('You need to enter your ghost ID first', 'info')
+    return redirect(url_for('views.home'))
   
+  ghost = Spectre.query.filter_by(ghost_id=ghost_id).first()
+
+  if not ghost:
+    session.clear()
+    flash('Saved ghost ID not found', 'warning')
+    return redirect(url_for('views.home'))
+
+  ghost_ids = generate_gids(2)
+
+  for ghost_id in ghost_ids:
+    new_spectre = Spectre(ghost_id=ghost_id, haunt=ghost.haunt, parent=ghost)
+    db.session.add(new_spectre)
+
+  db.session.commit()
+
+  ghost_pdf = generate(ghost_ids)
+
+  return send_file(ghost_pdf, attachment_filename='ghosts.pdf', as_attachment=True, cache_timeout=0)

@@ -27,5 +27,7 @@ p {
 }
 
 .vis-network {
-  background-color: #333;
+  border-style: solid;
+  border-width: 1vh;
+  border-color: #444;
 }

@@ -7,34 +7,64 @@
     <div class="columns is-multiline">
       <div class="column is-full-tablet is-one-quarter-desktop">
         <h1 class="title has-text-light">{{ ghost_id }}</h1>
+        &nbsp;
+        <h1 class='title has-text-light is-4'>Steps to Ghosting</h1>
+        <div class='content has-text-light'>
+          <ol type='1'>
+            <li>Click the "Download Ghosts" button below</li>
+            <li>Print and cut out the ghosts</li>
+            <li>Make a goodie bag and make sue to include the ghost and poem!</li>
+            <li>Deliver your goodie bag to a friend!</li>
+            <li>Stay spooky!</li>
+          </ol>
+        </div>
+        <button class='button is-orange is-fullwidth' onClick='download_ghosts()'>Download Ghosts</button>
       </div>
       <div class="column is-full-tablet is-three-quarters-desktop fill" id="ghostView">
-        
       </div>
     </div>
   </section>
+  <iframe id="filedownload" class='is-hidden'></iframe>
 {% endblock content %}
 
 
 {% block scripts %}
   <script>
+    function download_ghosts() {
+      document.getElementById('filedownload').src = '/haunt/download?r=' + Math.random();
+    }
+
+
     function update_ghosts(ghosts) {
-      const nodes = new vis.DataSet(ghosts.map(function(ghost) {
-        return {
-          id: ghost.id,
-          shape: 'circle'
-        };
-      }));
-
-      let e = [];
-
-      for (i in ghosts) {
-        for (c in ghosts[i].children){
-          e.push({from: ghosts[i].id, to: ghosts[i].children[c], arrows:'to'});
+      const nodes = new vis.DataSet(ghosts.reduce(function(acc, cur) {
+        if (cur.is_active) {
+          acc.push({
+            id: cur.id,
+            image: "{{ url_for('static', filename='ghost.png') }}",
+            size: (cur.children.length*3 + 20),
+            shape: 'image',
+            color: {
+              border: '#999'
+            }
+          });
         }
-      }
 
-      const edges = new vis.DataSet(e);
+        return acc;
+      }, []));
+
+
+      const edges = new vis.DataSet(ghosts.reduce(function(acc, cur) {
+        console.log(cur);
+        return acc.concat(cur.children.map(function(id) {
+          return {
+            from: cur.id,
+            to: id,
+            arrows: 'to'
+          };
+        }));
+      }, []));
+
+      console.log(edges);
 
       const netdata = {
         nodes: nodes,
