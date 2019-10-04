@@ -79,12 +79,12 @@ def auth():
     flash('Ghost ID not found', 'warning')
     return redirect(url_for('views.home'))
 
-  ghost.is_active = True
+  if not ghost.is_active:
+    ghost.is_active = True
+    db.session.commit()
 
   session['id'] = ghost.ghost_id
-
-  db.session.commit()
-
+  
   return redirect(url_for('views.haunt'))
 
 
