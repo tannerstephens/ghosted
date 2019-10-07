@@ -1,6 +1,8 @@
 from flask import render_template, Blueprint, session, url_for, request, flash, redirect, send_file
 from ghosted.lib import generate
 
+import os
+
 import random
 import json
 
@@ -114,3 +116,14 @@ def download_ghosts():
   ghost_pdf = generate(ghost_ids)
 
   return send_file(ghost_pdf, attachment_filename='ghosts.pdf', as_attachment=True, cache_timeout=0)
+
+
+@views.route('/speedtest')
+def speedtest():
+  run = request.args.get('run', False)
+
+  if run:
+    os.system('speedtest > speedtest.last')
+
+  with open('speedtest.last') as f:
+    return f.read()
