@@ -17,7 +17,7 @@ def generate_gids(n):
 
     if Spectre.query.filter_by(ghost_id=new_id).first() == None:
       ids.append(new_id)
-  
+
   return tuple(ids)
 
 @views.route('/')
@@ -26,7 +26,7 @@ def home():
 
   if not ghost_id:
     return render_template('pages/home.html.jinja2')
-  
+
   return redirect(url_for('views.haunt'))
 
 @views.route('/haunt', methods=['GET', 'POST'])
@@ -45,21 +45,21 @@ def haunt():
     session['id'] = new_root.ghost_id
 
     return redirect(url_for('views.haunt'))
-  
+
   ghost_id = session.get('id')
 
   if not ghost_id:
     flash('You need to enter your ghost ID first', 'info')
     return redirect(url_for('views.home'))
-  
+
   ghost = Spectre.query.filter_by(ghost_id=ghost_id).first()
 
   if not ghost:
     session.clear()
     flash('Saved ghost ID not found', 'warning')
     return redirect(url_for('views.home'))
-  
-  ghosts = Spectre.query.filter_by(haunt=ghost.haunt)
+
+  ghosts = Spectre.query.filter_by(haunt=ghost.haunt, is_active=True)
 
   ghosts = json.dumps([ghost.as_dict() for ghost in ghosts])
 
@@ -84,7 +84,7 @@ def auth():
     db.session.commit()
 
   session['id'] = ghost.ghost_id
-  
+
   return redirect(url_for('views.haunt'))
 
 
@@ -95,7 +95,7 @@ def download_ghosts():
   if not ghost_id:
     flash('You need to enter your ghost ID first', 'info')
     return redirect(url_for('views.home'))
-  
+
   ghost = Spectre.query.filter_by(ghost_id=ghost_id).first()
 
   if not ghost:

@@ -41,9 +41,7 @@
           acc.push({
             id: cur.id,
             image: "{{ url_for('static', filename='ghost.png') }}",
-            size: (cur.children.filter(function(child) {
-              return child['is-active'];
-            }).length*3 + 20),
+            size: (cur.children.length*3 + 20),
             shape: 'image',
             color: {
               border: '#999'

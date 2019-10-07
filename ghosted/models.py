@@ -17,11 +17,14 @@ class Spectre(db.Model):
   children = db.relationship("Spectre", backref=db.backref('parent', remote_side=[id]))
 
   def as_dict(self):
+    active_children = filter(lambda child : child.is_active, self.children)
+    children = list(map(lambda child : { 'id' : child.id, 'is_active' : child.is_active }, active_children))
+
     return dict(
       id = self.id,
       is_active = self.is_active,
       is_root = self.is_root,
-      children = [{'id' : child.id, 'is-active' : child.is_active} for child in self.children]
+      children = children
     )
 
 
