@@ -41,7 +41,9 @@
           acc.push({
             id: cur.id,
             image: "{{ url_for('static', filename='ghost.png') }}",
-            size: (cur.children.length*3 + 20),
+            size: (cur.children.filter(function(child) {
+              return child['is-active'];
+            }).length*3 + 20),
             shape: 'image',
             color: {
               border: '#999'
@@ -54,17 +56,14 @@
 
 
       const edges = new vis.DataSet(ghosts.reduce(function(acc, cur) {
-        console.log(cur);
-        return acc.concat(cur.children.map(function(id) {
+        return acc.concat(cur.children.map(function(child) {
           return {
             from: cur.id,
-            to: id,
+            to: child.id,
             arrows: 'to'
           };
         }));
       }, []));
-
-      console.log(edges);
 
       const netdata = {
         nodes: nodes,
@@ -82,7 +81,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       const ghosts = JSON.parse(document.getElementById('ghosts').innerHTML);
 
-      update_ghosts(ghosts);      
+      update_ghosts(ghosts);
     })
   </script>
 {% endblock scripts %}

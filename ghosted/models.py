@@ -21,7 +21,7 @@ class Spectre(db.Model):
       id = self.id,
       is_active = self.is_active,
       is_root = self.is_root,
-      children = [child.id for child in self.children]
+      children = [{'id' : child.id, 'is-active' : child.is_active} for child in self.children]
     )
 
 
