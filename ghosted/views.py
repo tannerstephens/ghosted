@@ -65,7 +65,7 @@ def haunt():
 
   ghosts = json.dumps([ghost.as_dict() for ghost in ghosts])
 
-  return render_template('pages/haunt.html.jinja2', ghosts=ghosts, ghost_id=ghost.id)
+  return render_template('pages/haunt.html.jinja2', ghosts=ghosts, id=ghost.id, ghost_id=ghost_id)
 
 @views.route('/auth', methods=['POST'])
 def auth():
