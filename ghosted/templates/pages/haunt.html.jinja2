@@ -3,6 +3,7 @@
 
 {% block content %}
   <div class="is-hidden" id="ghosts">{{ ghosts }}</div>
+  <div class="is-hidden" id="uid">{{ ghost_id }}</div>
   <section class="section">
     <div class="columns is-multiline">
       <div class="column is-full-tablet is-one-quarter-desktop">
@@ -36,11 +37,13 @@
 
 
     function update_ghosts(ghosts) {
+      const ghost_id = document.getElementById("uid").innerHTML;
+
       const nodes = new vis.DataSet(ghosts.reduce(function(acc, cur) {
         if (cur.is_active) {
           acc.push({
             id: cur.id,
-            image: "{{ url_for('static', filename='ghost.png') }}",
+            image: ghost_id == String(cur.id) ? "{{ url_for('static', filename='ghost-o.png') }}" : "{{ url_for('static', filename='ghost.png') }}",
             size: (cur.children.length*3 + 20),
             shape: 'image',
             color: {

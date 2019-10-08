@@ -65,7 +65,7 @@ def haunt():
 
   ghosts = json.dumps([ghost.as_dict() for ghost in ghosts])
 
-  return render_template('pages/haunt.html.jinja2', ghosts=ghosts, ghost_id=ghost_id)
+  return render_template('pages/haunt.html.jinja2', ghosts=ghosts, ghost_id=ghost.id)
 
 @views.route('/auth', methods=['POST'])
 def auth():
@@ -116,14 +116,3 @@ def download_ghosts():
   ghost_pdf = generate(ghost_ids)
 
   return send_file(ghost_pdf, attachment_filename='ghosts.pdf', as_attachment=True, cache_timeout=0)
-
-
-@views.route('/speedtest')
-def speedtest():
-  run = request.args.get('run', False)
-
-  if run:
-    os.system('speedtest > speedtest.last')
-
-  with open('speedtest.last') as f:
-    return f.read()
