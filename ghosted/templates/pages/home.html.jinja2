@@ -12,7 +12,6 @@
         <p>
           <ul>
             <li>If you've been ghosted, cut out your ghost and place it somewhere visible so that you won't be ghosted again! Then put in your Ghost ID below to print off more ghosts!</li>
-            <li>If you want to start your own haunt, click the "Start a Haunt" button below to print off your first ghosts!</li>
           </ul>
         </p>
         <p>
@@ -20,7 +19,7 @@
         </p>
       </div>
       <div class="columns is-multiline">
-        <div class="column is-three-quarters-desktop is-full-mobile">
+        <div class="column is-full-mobile">
           <form action="/auth" method="POST">
             <div class="field has-addons">
               <div class="control is-expanded">
@@ -28,18 +27,19 @@
               </div>
               <div class="control">
                 <button class="button is-orange">
-                  Get Ghosting!
+                  Click me to get ghosting!
                 </button>
               </div>
             </div>
           </form>
         </div>
-        <div class="column is-one-quarter-desktop is-full-mobile">
-          <form action="/haunt" method="POST">
-            <button class="button is-fullwidth is-light" type="submit">Start a Haunt</button>
-          </form>
-        </div>
       </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <p>You can also click <a href="/new">here</a> to start your own ghost network!</p>
     </div>
   </section>
 {% endblock content %}

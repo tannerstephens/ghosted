@@ -31,23 +31,21 @@ def home():
 
   return redirect(url_for('views.haunt'))
 
-@views.route('/haunt', methods=['GET', 'POST'])
+@views.route('/new')
+def new_haunt():
+  haunt = Haunt()
+  db.session.add(haunt)
+
+  new_root = Spectre(ghost_id=generate_gids(1)[0], is_root=True, is_active=True, haunt=haunt)
+  db.session.add(new_root)
+
+  db.session.commit()
+
+  session['id'] = new_root.ghost_id
+  return redirect(url_for('views.haunt'))
+
+@views.route('/haunt')
 def haunt():
-  if request.method == 'POST':
-    haunt = Haunt()
-
-    db.session.add(haunt)
-    db.session.commit()
-
-    new_root = Spectre(ghost_id=generate_gids(1)[0], is_root=True, is_active=True, haunt=haunt)
-
-    db.session.add(new_root)
-    db.session.commit()
-
-    session['id'] = new_root.ghost_id
-
-    return redirect(url_for('views.haunt'))
-
   ghost_id = session.get('id')
 
   if not ghost_id:

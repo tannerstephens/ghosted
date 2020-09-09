@@ -1,7 +1,14 @@
 {% extends "base.html.jinja2" %}
 
+{% block header %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js" integrity="sha256-JuQeAGbk9rG/EoRMixuy5X8syzICcvB0dj3KindZkY0=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" integrity="sha256-iq5ygGJ7021Pi7H5S+QAUXCPUfaBzfqeplbg/KlEssg=" crossorigin="anonymous" />
+  <script src="{{ url_for('static', filename='js/haunt.js') }}"></script>
+{% endblock %}
 
 {% block content %}
+  <div class="is-hidden" id="ghost">{{ url_for('static', filename='ghost.png') }}</div>
+  <div class="is-hidden" id="ghost-o">{{ url_for('static', filename='ghost-o.png') }}</div>
   <div class="is-hidden" id="ghosts">{{ ghosts }}</div>
   <div class="is-hidden" id="uid">{{ id }}</div>
   <section class="section">
@@ -28,62 +35,3 @@
   </section>
   <iframe id="filedownload" class='is-hidden'></iframe>
 {% endblock content %}
-
-
-{% block scripts %}
-  <script>
-    function download_ghosts() {
-      document.getElementById('filedownload').src = '/haunt/download?r=' + Math.random();
-    }
-
-
-    function update_ghosts(ghosts) {
-      const ghost_id = document.getElementById("uid").innerHTML;
-
-      const nodes = new vis.DataSet(ghosts.reduce(function(acc, cur) {
-        if (cur.is_active) {
-          acc.push({
-            id: cur.id,
-            image: ghost_id == String(cur.id) ? "{{ url_for('static', filename='ghost-o.png') }}" : "{{ url_for('static', filename='ghost.png') }}",
-            size: (cur.children.length*3 + 20),
-            shape: 'image',
-            color: {
-              border: '#999'
-            }
-          });
-        }
-
-        return acc;
-      }, []));
-
-
-      const edges = new vis.DataSet(ghosts.reduce(function(acc, cur) {
-        return acc.concat(cur.children.map(function(child) {
-          return {
-            from: cur.id,
-            to: child.id,
-            arrows: 'to'
-          };
-        }));
-      }, []));
-
-      const netdata = {
-        nodes: nodes,
-        edges: edges
-      };
-
-      const options = {};
-
-      const container = document.getElementById("ghostView");
-
-      const network = new vis.Network(container, netdata, options);
-    }
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const ghosts = JSON.parse(document.getElementById('ghosts').innerHTML);
-
-      update_ghosts(ghosts);
-    })
-  </script>
-{% endblock scripts %}
