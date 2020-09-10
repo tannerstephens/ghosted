@@ -1,6 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
-import random
 import io
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -12,8 +11,8 @@ def generate(gids):
   im = im.convert("RGB")
   draw = ImageDraw.Draw(im)
 
-  draw.text((840,510), gids[0], font=fnt, fill=(0,0,0,255))
-  draw.text((840,950), gids[1], font=fnt, fill=(0,0,0,255))
+  draw.text((440,900), gids[0], font=fnt, fill=(0,0,0,255))
+  draw.text((437,2006), gids[1], font=fnt, fill=(0,0,0,255))
 
   output = io.BytesIO()
 
