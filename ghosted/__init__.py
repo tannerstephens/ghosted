@@ -7,11 +7,10 @@ def create_app(config='ghosted.config.Config'):
   app.config.from_object(config)
 
   with app.app_context():
-    from ghosted.views import views
-    app.register_blueprint(views)
+    from .routes import register_routes
+    register_routes(app)
 
-
-    from ghosted.models import db
+    from .models import db
     Migrate(app, db)
 
   return app

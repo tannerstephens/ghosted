@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <h1 class="title has-text-light">The phantom ghost has come to town...</h1>
+      <div class="box has-background-dark">
+        <p class="has-text-light">Ghosting is a long-standing halloween tradition of spookily giving it forward! If everyone who can ghosts two more people, soon everyone will have candy!</p>
+        <p class="has-text-light">It's really simple! If you've been ghosted, enter your code below and check out your ghost web! Then, if you choose to, you'll be able to print off more ghosts to pass on to your neighbors! Don't forget to put your ghost on your front door!</p>
+        <p class="has-text-light">Or maybe you want to start your own haunt, that's awesome! Just click the "New Haunt" button below!</p>
+        <p class="has-text-light">Happy haunting!</p>
+      </div>
+      <div class="columns">
+        <div class="column is-half-tablet">
+          <div class="box has-background-dark">
+            <h2 class="subtitle has-text-light">I've been ghosted!</h2>
+            <form method="POST" action="/auth">
+              <div class="field is-grouped">
+                <p class="control is-expanded">
+                  <input class="input" type="text" placeholder="Ghost ID">
+                </p>
+                <p class="control">
+                  <button type="submit" class="button is-orange">Get Ghosting!</button>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="column is-half-tablet">
+          <div class="box has-background-dark">
+            <h2 class="subtitle has-text-light">I want to start a new haunt!</h2>
+            <a class="button is-light is-fullwidth" href='/new'>Start a new haunt!</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

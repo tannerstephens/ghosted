@@ -1,7 +1,5 @@
 from flask import render_template, Blueprint, session, url_for, request, flash, redirect, send_file
-from ghosted.lib import generate
-
-import os
+from ..ghost_pdf_generator import generate
 
 import random
 import json
@@ -27,7 +25,7 @@ def home():
   ghost_id = session.get('id')
 
   if not ghost_id:
-    return render_template('pages/home.html.jinja2')
+    return render_template('pages/home.html')
 
   return redirect(url_for('views.haunt'))
 
@@ -63,7 +61,7 @@ def haunt():
 
   ghosts = json.dumps([ghost.as_dict() for ghost in ghosts])
 
-  return render_template('pages/haunt.html.jinja2', ghosts=ghosts, id=ghost.id, ghost_id=ghost_id)
+  return render_template('pages/haunt.html', ghosts=ghosts, id=ghost.id, ghost_id=ghost_id)
 
 @views.route('/auth', methods=['POST'])
 def auth():

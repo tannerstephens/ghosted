@@ -10,16 +10,14 @@
     
     {% block header %}
     {% endblock %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}" />
 
   </head>
   
   <body>
-    {% include "flash.html.jinja2" %}
+    {% include "fragments/flash.html" %}
+
     {% block content %}
     {% endblock content %}
-
-    {% block scripts %}
-    {% endblock scripts %}
   </body>
 </html>

@@ -1,4 +1,4 @@
-{% extends "base.html.jinja2" %}
+{% extends "base.html" %}
 
 {% block header %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js" integrity="sha256-JuQeAGbk9rG/EoRMixuy5X8syzICcvB0dj3KindZkY0=" crossorigin="anonymous"></script>
@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block content %}
-  <div class="is-hidden" id="ghost">{{ url_for('static', filename='ghost.png') }}</div>
-  <div class="is-hidden" id="ghost-o">{{ url_for('static', filename='ghost-o.png') }}</div>
+  <div class="is-hidden" id="ghost">{{ url_for('static', filename='img/ghost.png') }}</div>
+  <div class="is-hidden" id="ghost-o">{{ url_for('static', filename='img/ghost-o.png') }}</div>
   <div class="is-hidden" id="ghosts">{{ ghosts }}</div>
   <div class="is-hidden" id="uid">{{ id }}</div>
   <section class="section">
@@ -20,11 +20,11 @@
         <div class='content has-text-light'>
           <ol type='1'>
             <li>Click the "Download Ghosts" button below</li>
-            <li>Print and cut out the ghosts</li>
-            <li>Make a goodie bag and make sure to include the ghost and poem!</li>
+            <li>Cut your ghost cards out!</li>
+            <li>Safely assemble a halloween goodie bag and be sure to include your ghost card!</li>
             <li>Deliver your goodie bag to a friend!</li>
             <li>Watch your ghost network grow!</li>
-            <li>And don't forget to display your ghost so the spirits know you have already been visited!</li>
+            <li>Don't forget to display your ghost so the spirits know you have already been visited!</li>
           </ol>
         </div>
         <button class='button is-orange is-fullwidth' onClick='download_ghosts()'>Download Ghosts</button>
