@@ -5,18 +5,18 @@ function download_ghosts() {
 
 function update_ghosts(ghosts) {
   const ghost_id = document.getElementById("uid").innerHTML;
-  const ghostIconURL = document.getElementById('ghost').innerHTML;
-  const ghostOIconURL = document.getElementById('ghost-o').innerHTML;
 
   const nodes = new vis.DataSet(ghosts.reduce(function(acc, cur) {
+    const getGhostURL = ghostID => `/ghost/${ghostID}/ghost.png`;
+
     if (cur.is_active) {
       acc.push({
         id: cur.id,
-        image: ghost_id == String(cur.id) ? ghostOIconURL : ghostIconURL,
+        image: getGhostURL(cur.ghost_id),
         size: (cur.children.length*3 + 20),
         shape: 'image',
         color: {
-          border: '#999'
+          border: ghost_id == String(cur.id) ? '#f58916' : '#999'
         }
       });
     }
@@ -44,7 +44,7 @@ function update_ghosts(ghosts) {
 
   const container = document.getElementById("ghostView");
 
-  const network = new vis.Network(container, netdata, options);
+  new vis.Network(container, netdata, options);
 }
 
 

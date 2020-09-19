@@ -1,8 +1,4 @@
-from flask import current_app
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy(current_app)
-
+from .extensions import db
 
 class Spectre(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -24,7 +20,8 @@ class Spectre(db.Model):
       id = self.id,
       is_active = self.is_active,
       is_root = self.is_root,
-      children = children
+      children = children,
+      ghost_id = self.ghost_id
     )
 
 

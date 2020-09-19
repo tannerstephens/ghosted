@@ -1,16 +1,23 @@
 from flask import Flask
-from flask_migrate import Migrate
+from .routes import register_routes
+from .extensions import (
+  migrate,
+  db,
+  ghost_generator
+)
 
 def create_app(config='ghosted.config.Config'):
   app = Flask(__name__)
 
   app.config.from_object(config)
 
-  with app.app_context():
-    from .routes import register_routes
-    register_routes(app)
-
-    from .models import db
-    Migrate(app, db)
+  register_extensions(app)
+  register_routes(app)
 
   return app
+
+
+def register_extensions(app):
+  db.init_app(app)
+  migrate.init_app(app)
+  ghost_generator.init_app(app)

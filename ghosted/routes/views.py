@@ -1,13 +1,12 @@
 from flask import render_template, Blueprint, session, url_for, request, flash, redirect, send_file
-from ..ghost_pdf_generator import generate
-
 import random
 import json
 
-from ghosted.models import Spectre, Haunt, db
+from ..ghost_pdf_generator import generate
+from ..extensions import db
+from ..models import Spectre, Haunt
 
 views = Blueprint('views', __name__)
-
 
 def generate_gids(n):
   ids = []
