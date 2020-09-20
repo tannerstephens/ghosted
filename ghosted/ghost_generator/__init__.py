@@ -21,7 +21,8 @@ class GhostGenerator:
     return {
       'base': Image.open(f'{CURRENT_DIR}/ghost/base.png'),
       'eyes': self._load_images(glob(f'{CURRENT_DIR}/ghost/eyes/*.png')),
-      'mouths': self._load_images(glob(f'{CURRENT_DIR}/ghost/mouths/*.png'))
+      'mouths': self._load_images(glob(f'{CURRENT_DIR}/ghost/mouths/*.png')),
+      'necks': self._load_images(glob(f'{CURRENT_DIR}/ghost/necks/*.png'))
     }
 
   def _load_images(self, images):
@@ -34,16 +35,20 @@ class GhostGenerator:
 
     eyes_hex = h[:16]
     mouth_hex = h[16:]
+    neck_hex = h[8:16]
 
     eyes_index = int(eyes_hex, 16) % len(files['eyes'])
     mouth_index = int(mouth_hex, 16) % len(files['mouths'])
+    neck_index = int(neck_hex, 16) % len(files['necks'])
 
     base = files['base'].copy()
     eyes = files['eyes'][eyes_index]
     mouth = files['mouths'][mouth_index]
+    neck = files['necks'][neck_index]
 
     base.paste(eyes, (511,496), eyes)
     base.paste(mouth, (485,812), mouth)
+    base.paste(neck, (485,1150), neck)
 
     return base
 
@@ -51,5 +56,4 @@ class GhostGenerator:
     io = BytesIO()
     self.generate_ghost(s).save(io, 'PNG')
     io.seek(0)
-
     return io

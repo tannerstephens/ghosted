@@ -4,6 +4,7 @@ from ..extensions import ghost_generator
 ghost_api = Blueprint('ghost_api', __name__, url_prefix='/ghost')
 
 @ghost_api.route('/<string:key>/ghost.png')
+@ghost_api.route('/<string:key>.png')
 def get_ghost(key):
   ghost = ghost_generator.generate_ghost_io(key)
 
