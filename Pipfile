@@ -11,6 +11,7 @@ flask-sqlalchemy = "*"
 flask-migrate = "*"
 gunicorn = "*"
 pillow = "*"
+flask-caching = "*"
 
 [requires]
 python_version = "3.7"
