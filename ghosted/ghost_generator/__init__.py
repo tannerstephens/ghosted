@@ -33,9 +33,9 @@ class GhostGenerator:
 
     h = md5(s.encode()).hexdigest()
 
-    eyes_hex = h[:16]
-    mouth_hex = h[16:]
-    neck_hex = h[8:16]
+    eyes_hex = h[:3]
+    mouth_hex = h[3:6]
+    neck_hex = h[6:9]
 
     eyes_index = int(eyes_hex, 16) % len(files['eyes'])
     mouth_index = int(mouth_hex, 16) % len(files['mouths'])
