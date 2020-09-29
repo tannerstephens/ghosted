@@ -8,6 +8,10 @@ from ..models import Spectre, Haunt
 
 views = Blueprint('views', __name__)
 
+@views.before_request
+def make_session_perm():
+  session.permanent = True
+
 def generate_gids(n):
   ids = []
 
